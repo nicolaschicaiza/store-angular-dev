@@ -7,6 +7,7 @@ import { Product } from './product.mode';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  widthImg = 10;
   name = 'Nicolás'; // public
   age = 18;
   img = "https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60";

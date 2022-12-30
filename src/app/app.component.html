@@ -1,16 +1,32 @@
+<h1>Class & Style</h1>
+<p>Modificación dinámica de apariencia a través de class y style</p>
+<input type="text" required #nameinput2="ngModel" [(ngModel)]="person.name">
+<p class="message-error" [class.invalid]="nameinput2.invalid">El campo es requerido</p>
+<label>Nombre</label>
+<input type="text" required #nameInput3="ngModel" [(ngModel)]="person.name">
+<p [style.font-style]="nameInput3.invalid ? 'italic' : 'normal'">Este es un Texto</p>
+<div class="styles">
+  <div>
+    <input type="text" [(ngModel)]="widthImg">
+  </div>
+  <div>
+    <img [style.width.px]="widthImg" [src]="person.avatar"> <!-- property biding: especificos para propiedades-->
+  </div>
+</div>
+<hr>
 <h1>ngSwitch</h1>
 <input type="text" required [(ngModel)]="person.name">
 <div [ngSwitch]="person.name">
-<p *ngSwitchCase="'nicolas'">
-  La persona es Nicolás
-</p>
-<p *ngSwitchCase="'julian'">
-  La persona es Julian
-</p>
-<p *ngSwitchCase="'camilo'">
-  La persona es Camilo
-</p>
-<p *ngSwitchDefault="">No hace match</p>
+  <p *ngSwitchCase="'nicolas'">
+    La persona es Nicolás
+  </p>
+  <p *ngSwitchCase="'julian'">
+    La persona es Julian
+  </p>
+  <p *ngSwitchCase="'camilo'">
+    La persona es Camilo
+  </p>
+  <p *ngSwitchDefault="">No hace match</p>
 </div>
 <!-- <p *ngIf="person.name === 'nicolas'">
   La persona es Nicolás
@@ -64,23 +80,24 @@
 <hr>
 <h1>NgModel</h1>
 <p>Nombre {{ person.name }}</p>
-<input type="text" required #nameInput="ngModel" [(ngModel)]="person.name"/>
+<input type="text" required #nameInput="ngModel" [(ngModel)]="person.name" />
 <p>Valid: {{ nameInput.valid }}</p>
 <p>Age: {{ person.age }}</p>
-<input type="number" max="18" min="10" required #ageInput="ngModel" [(ngModel)]="person.age"/>
+<input type="number" max="18" min="10" required #ageInput="ngModel" [(ngModel)]="person.age" />
 <p>Valid: {{ ageInput.valid }}</p>
-<hr/>
+<hr />
 <h1>Eventos</h1>
 <button [disabled]="btnDisabled">Enviar</button>
 <button (click)="toggleButton()">Toggle Button</button>
 <p>Edad {{ person.age }}</p>
 <button (click)="increaseAge()">Age ++</button>
 <div class="box" (scroll)="onScroll($event)">
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, dolor quam ullam quaerat cumque tempore doloremque quos odit. Inventore maiores iure eaque maxime veritatis amet harum pariatur aut. Illo, veritatis.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, dolor quam ullam quaerat cumque tempore doloremque
+    quos odit. Inventore maiores iure eaque maxime veritatis amet harum pariatur aut. Illo, veritatis.</p>
 </div>
 <p>Nombre {{ person.name }}</p>
 <input type="text" [value]="person.name" (keyup)="changeName($event)">
-<hr/>
+<hr />
 <h1>Propiedades</h1>
 <button [disabled]="btnDisabled">Enviar</button>
 <input type="text" [value]="person.name">
