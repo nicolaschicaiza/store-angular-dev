@@ -1,4 +1,4 @@
-<p>
+<!-- <p>
   La cantidad {{ myShoppingCart.length }}
 </p>
 <p>
@@ -11,18 +11,31 @@
   Today: {{ today | timeAgo }}
 </p>
 <p>
-  Other date: {{ today | date:'yyyy.dd.MM' }} <!-- Mi formato -->
-</p>
+  Other date: {{ today | date:'yyyy.dd.MM' }}  Mi formato
+</p> -->
 <!-- <p>
   {{ 'HoLa Soy NiCoLAs' | uppercase }}
 </p>
 <p>
   {{ 'HoLa Soy NiCoLAs' | lowercase }}
 </p> -->
+<button (click)="createNewProduct()">Create</button>
 <div class="products--grid">
-  <app-product
-    [product]="product"
-    *ngFor="let product of products"
-    (addedProduct)="onAddToShoppingCart($event)"
-  ></app-product>
+  <app-product [product]="product" *ngFor="let product of products" (addedProduct)="onAddToShoppingCart($event)"
+    (showProduct)="onShowDetail($event)"></app-product>
+    <button (click)="loadMore()">Load more</button>
+</div>
+<div class="product-detail" [class.active]="showProductDetail">
+  <div *ngIf="product">
+    <button (click)="toggleProductDetail()">Close</button>
+    <h1>{{ product.title }}</h1>
+    <swiper [slidesPerView]="1">
+      <ng-template swiperSlide *ngFor="let img of product.images">
+        <img [src]="img" [alt]="product.title">
+      </ng-template>
+    </swiper>
+    <p>{{ product.description }}</p>
+    <button (click)="updateProduct()">Editar</button>
+    <button (click)="deleteProduct()">Eliminar</button>
+  </div>
 </div>
