@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { switchMap } from 'rxjs/operators';
+import { zip } from 'rxjs';
 import { CreateProductDTO, Product, UpdateProductDTO } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 import { StoreService } from 'src/app/services/store.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-products',
@@ -66,6 +69,7 @@ export class ProductsComponent implements OnInit {
   };
   limit = 10;
   offset = 0;
+  statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init';
 
   constructor(
     private storeService: StoreService,
@@ -89,6 +93,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onShowDetail(id: string) {
+    this.statusDetail = 'loading';
     //en caso de que den dos veces al botón solo ocultara los detalles(para no ir a darle al botón de cerrar)
     if (this.product.id != '' && this.product.id == id && this.showProductDetail == true) {
       this.showProductDetail = false;
@@ -105,14 +110,51 @@ export class ProductsComponent implements OnInit {
       this.showProductDetail = false;
     }
 
+    this.toggleProductDetail();
     this.productsService.getProduct(id)
       .subscribe(data => {
         this.product = data;
         if (!this.showProductDetail) {
-          this.toggleProductDetail();
+          this.statusDetail = 'success'
         }
-
+      }, errorMsg => {
+        window.alert(errorMsg)
+        console.error(errorMsg);
+        this.statusDetail = 'error';
       });
+  }
+
+  readAndUpdate(id: string) {
+    this.productsService.getProduct(id)
+      .pipe(
+        // para depender una de otra usar switchMap
+        switchMap((product) =>
+          this.productsService.update(product.id, { title: 'change' })),
+      )
+      .subscribe(data => {
+        console.log(data);
+        // const product = data;
+        // this.productsService.update(product.id, { title: 'change' })
+        //   .subscribe(rtaUpdate => {
+        //     console.log(rtaUpdate);
+        //   })
+      });
+    // para ejecutar todo en paralelo usar zip, sin embargo lo recomendable es que esta
+    // lógica se coloque directamente en el servicio con el fin de reutilizar en otro componente
+    // zip(
+
+    //   this.productsService.getProduct(id),
+    //   this.productsService.update(id, { title: 'nuevo' })
+    // )
+    //   .subscribe(response => {
+    //     const read = response[0];
+    //     const update = response[1];
+    //   })
+    this.productsService.fetchReadAndUpdate(id, { title: 'change' })
+      .subscribe(response => {
+        const read = response[0];
+        const update = response[1];
+      })
   }
 
   createNewProduct() {
@@ -166,6 +208,6 @@ export class ProductsComponent implements OnInit {
       .subscribe(data => {
         this.products = this.products.concat(data);
         this.offset += this.limit;
-    })
+      })
   }
 }

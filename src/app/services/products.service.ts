@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { CreateProductDTO, Product, UpdateProductDTO } from '../models/product.model';
-import { retry } from 'rxjs';
+import { retry, catchError, map } from 'rxjs/operators';
+import { throwError, zip } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { isNgTemplate } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class ProductsService {
 
   constructor(
     private http: HttpClient
-  ) {}
+  ) { }
 
   getAllProducts(limit?: number, offset?: number) {
     let params = new HttpParams();
@@ -24,12 +26,43 @@ export class ProductsService {
     // return this.http.get<Product[]>('https://fakestoreapi.com/products');
     return this.http.get<Product[]>(this.apiUrl, { params })
       .pipe(
-        retry(3)
+        retry(3),
+        map(products => products.map(item => {
+          return {
+            ...item,
+            taxes: .19 * item.price
+          }
+        }))
       );
+  }
+
+  fetchReadAndUpdate(id: string, dto: UpdateProductDTO) {
+    return zip(
+      this.getProduct(id),
+      this.update(id, dto)
+    );
+      // .subscribe(response => {
+      //   const read = response[0];
+      //   const update = response[1];
+      // })
   }
 
   getProduct(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === HttpStatusCode.Conflict) {
+            return throwError('Algo está fallando en el server');
+          }
+          if (error.status === HttpStatusCode.NotFound) {
+            return throwError('El producto no existe');
+          }
+          if (error.status === HttpStatusCode.Unauthorized) {
+            return throwError('No estás autorizado');
+          }
+          return throwError('Ups algo salio mal');
+        })
+      )
   }
 
   getProductsByPage(limit: number, offset: number) {

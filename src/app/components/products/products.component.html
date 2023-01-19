@@ -20,12 +20,14 @@
   {{ 'HoLa Soy NiCoLAs' | lowercase }}
 </p> -->
 <button (click)="createNewProduct()">Create</button>
+<button (click)="onShowDetail('1234')">detalle not found</button>
 <div class="products--grid">
   <app-product [product]="product" *ngFor="let product of products" (addedProduct)="onAddToShoppingCart($event)"
     (showProduct)="onShowDetail($event)"></app-product>
     <button (click)="loadMore()">Load more</button>
 </div>
 <div class="product-detail" [class.active]="showProductDetail">
+  {{ statusDetail }}
   <div *ngIf="product">
     <button (click)="toggleProductDetail()">Close</button>
     <h1>{{ product.title }}</h1>
