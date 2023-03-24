@@ -17,53 +17,15 @@ export class ProductsComponent {
     myShoppingCart: Product[] = [];
     total = 0;
     @Input() products: Product[] = [];
-    // @Input() ProductId: string | null = null;
     @Input() set productId(id: string | null) {
         if (id) {
+            console.log('products: ', id);
             this.onShowDetail(id);
         }
     }
     @Output() loadMore: EventEmitter<string> = new EventEmitter<string>();
     today = new Date();
     date = new Date(2023, 1, 12);
-    // products: Product[] = [
-    // {
-    //   id: '1',
-    //   name: 'El mejor juguete',
-    //   price: 565,
-    //   image: './assets/images/toy.jpg'
-    // },
-    // {
-    //   id: '2',
-    //   name: 'Bicicleta casi nueva',
-    //   price: 356,
-    //   image: './assets/images/bike.jpg'
-    // },
-    // {
-    //   id: '3',
-    //   name: 'Colleción de albumnes',
-    //   price: 34,
-    //   image: './assets/images/album.jpg'
-    // },
-    // {
-    //   id: '4',
-    //   name: 'Mis libros',
-    //   price: 23,
-    //   image: './assets/images/books.jpg'
-    // },
-    // {
-    //   id: '5',
-    //   name: 'Casa para perro',
-    //   price: 34,
-    //   image: '../assets/images/house.jpg'
-    // },
-    // {
-    //   id: '6',
-    //   name: 'Gafas',
-    //   price: 343,
-    //   image: './assets/images/glasses.jpg'
-    // }
-    // ];
     showProductDetail = false;
     product: Product = {
         id: '',
@@ -152,23 +114,7 @@ export class ProductsComponent {
             )
             .subscribe(data => {
                 console.log(data);
-                // const product = data;
-                // this.productsService.update(product.id, { title: 'change' })
-                //   .subscribe(rtaUpdate => {
-                //     console.log(rtaUpdate);
-                //   })
             });
-        // para ejecutar todo en paralelo usar zip, sin embargo lo recomendable es que esta
-        // lógica se coloque directamente en el servicio con el fin de reutilizar en otro componente
-        // zip(
-
-        //   this.productsService.getProduct(id),
-        //   this.productsService.update(id, { title: 'nuevo' })
-        // )
-        //   .subscribe(response => {
-        //     const read = response[0];
-        //     const update = response[1];
-        //   })
         this.productsService
             .fetchReadAndUpdate(id, { title: 'change' })
             .subscribe(response => {
@@ -178,7 +124,6 @@ export class ProductsComponent {
     }
 
     createNewProduct() {
-        // Para esta API se utiliza un Data Transfer Object (DTO) diferente al Modelo, por tanto se crea el DTO
         const product: CreateProductDTO = {
             title: 'Nuevo Producto',
             description: 'Una descripción',
@@ -208,8 +153,6 @@ export class ProductsComponent {
                 }
                 return item;
             });
-            // const productIndex = this.products.findIndex(item => item.id === this.product.id);
-            // this.products[productIndex] = data;
         });
     }
 
