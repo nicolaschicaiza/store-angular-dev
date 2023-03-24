@@ -5,7 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, AfterViewIni
   templateUrl: './img.component.html',
   styleUrls: ['./img.component.scss']
 })
-export class ImgComponent implements OnInit , OnChanges, AfterViewInit, OnDestroy {
+export class ImgComponent {
 
   img: string = '';
 
@@ -13,7 +13,7 @@ export class ImgComponent implements OnInit , OnChanges, AfterViewInit, OnDestro
   @Input('img')
     set changeImg(newImg: string) {
       this.img = newImg;
-    console.log('change just img =>', this.img);
+    // console.log('change just img =>', this.img);
       // code
     }
   @Input() alt: string = '';
@@ -25,47 +25,47 @@ export class ImgComponent implements OnInit , OnChanges, AfterViewInit, OnDestro
   constructor() {
     // before render
     // No async -- once time
-    console.log('Constructor', ' imgValue => ', this.img);
+    // console.log('Constructor', ' imgValue => ', this.img);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // before - during render
-    // changes inputs -- times
-    console.log('ngOnChanges', ' imgValue => ', this.img);
-    console.log('changes', changes);
-    // if (changes.) {
-    //   // code
-    // }
-  }
+//   ngOnChanges(changes: SimpleChanges): void {
+//     // before - during render
+//     // changes inputs -- times
+//     console.log('ngOnChanges', ' imgValue => ', this.img);
+//     console.log('changes', changes);
+//     // if (changes.) {
+//     //   // code
+//     // }
+//   }
 
-  ngOnInit(): void {
-    // before render
-    // async - fetch -- once time
-    console.log('ngOnInit', ' imgValue => ', this.img);
-    // this.counterFn = window.setInterval(() => {
-    //   this.counter += 1;
-    //   console.log(' run counter');
-    // }, 1000);
-  }
+//   ngOnInit(): void {
+//     // before render
+//     // async - fetch -- once time
+//     console.log('ngOnInit', ' imgValue => ', this.img);
+//     // this.counterFn = window.setInterval(() => {
+//     //   this.counter += 1;
+//     //   console.log(' run counter');
+//     // }, 1000);
+//   }
 
-  ngAfterViewInit(): void {
-     // after render
-     // handler children
-    console.log('ngAfterViewInit');
-  }
+//   ngAfterViewInit(): void {
+//      // after render
+//      // handler children
+//     console.log('ngAfterViewInit');
+//   }
 
-  ngOnDestroy(): void {
-     // delete
-    console.log('ngOnDestroy');
-    // window.clearInterval(this.counterFn);
-  }
+//   ngOnDestroy(): void {
+//      // delete
+//     console.log('ngOnDestroy');
+//     // window.clearInterval(this.counterFn);
+//   }
 
   imgError() {
     this.img = this.imageDefault;
   }
 
   imgLoaded() {
-    console.log('log son');
+    // console.log('log son');
     this.loaded.emit(this.img);
   }
 

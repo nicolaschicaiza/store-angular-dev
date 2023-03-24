@@ -1,22 +1,19 @@
-
-export interface Category {
-  id: number;
-  name: string;
-}
+import { Category } from './category.model';
 
 export interface Product {
-  id: string;
-  title: string;
-  price: number;
-  images: string[];
-  description: string;
-  category: Category;
-  taxes?: number;
+    id: string;
+    title: string;
+    price: number;
+    images: string[];
+    description: string;
+    category: Category;
+    taxes?: number;
 }
 
 export interface CreateProductDTO extends Omit<Product, 'id' | 'category'> {
-  categoryId: number;
+    categoryId: number;
 }
 
-export interface UpdateProductDTO extends Partial<CreateProductDTO>{ // Partial permite que los atributos sean opcionales
+export interface UpdateProductDTO extends Partial<CreateProductDTO> {
+    // Partial permite que los atributos sean opcionales
 }
