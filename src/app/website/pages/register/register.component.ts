@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { OnExit } from 'src/app/guards/exit.guard';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnExit {
+    constructor() {}
 
-  constructor() { }
+    ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
+    onExit() {
+        const rta = confirm('Logica desde comp, estás suguro de salir?');
+        return rta;
+    }
 }

@@ -3,28 +3,28 @@ import { Product } from '../models/product.model';
 import { BehaviorSubject } from 'rxjs';
 
 // decorador, especifican el comportamiento de la clase
-@Injectable({ // permite inyectar en otro componentes
-  providedIn: 'root'
+@Injectable({
+    // permite inyectar en otro componentes
+    providedIn: 'root'
 })
 export class StoreService {
+    private myShoppingCart: Product[] = [];
+    private myCart = new BehaviorSubject<Product[]>([]);
 
-  private myShoppingCart: Product[] = [];
-  private myCart = new BehaviorSubject<Product[]>([]);
+    myCart$ = this.myCart.asObservable();
 
-  myCart$ = this.myCart.asObservable();
+    constructor() {}
 
-  constructor() { }
+    addProduct(product: Product) {
+        this.myShoppingCart.push(product);
+        this.myCart.next(this.myShoppingCart);
+    }
 
-  addProduct(product: Product) {
-    this.myShoppingCart.push(product);
-    this.myCart.next(this.myShoppingCart);
-  }
+    getShoppingCart() {
+        return this.myShoppingCart;
+    }
 
-  getShoppingCart() {
-    return this.myShoppingCart;
-  }
-
-  getTotal() {
-    return this.myShoppingCart.reduce((sum, item) => sum + item.price, 0);
-  }
+    getTotal() {
+        return this.myShoppingCart.reduce((sum, item) => sum + item.price, 0);
+    }
 }

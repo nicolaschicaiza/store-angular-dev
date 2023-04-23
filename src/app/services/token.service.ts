@@ -1,10 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TokenService {
+    constructor() {}
 
-  constructor() { }
+    saveToken(token: string) {
+        localStorage.setItem('token', token);
+    }
+
+    getToken() {
+        return localStorage.getItem('token');
+    }
+
+    removeToken() {
+        localStorage.removeItem('token');
+    }
 }

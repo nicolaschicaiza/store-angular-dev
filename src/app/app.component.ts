@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from './services/users.service';
 import { FilesService } from './services/files.service';
+import { AuthService } from './services/auth.service';
+import { TokenService } from './services/token.service';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
+    template: `
+        <router-outlet></router-outlet>
+    `,
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     imgParent = 'https://www.w3schools.com/howto/img_avatar2.png';
     showImg = true;
     token = '';
@@ -15,8 +19,16 @@ export class AppComponent {
 
     constructor(
         private usersService: UsersService,
-        private filesService: FilesService
+        private filesService: FilesService,
+        private authService: AuthService,
+        private tokenService: TokenService
     ) {}
+
+    ngOnInit(): void {
+        if (this.tokenService.getToken()) {
+            this.authService.getProfile().subscribe();
+        }
+    }
 
     onLoaded(img: string) {
         console.log('log parent', img);
@@ -29,9 +41,10 @@ export class AppComponent {
     createUser() {
         this.usersService
             .create({
-                name: 'Nicolas',
-                email: 'nicolas@mail.com',
-                password: '12345'
+                name: 'Maria',
+                email: 'maria@mail.com',
+                password: '12345',
+                role: 'customer'
             })
             .subscribe(rta => {
                 console.log(rta);
