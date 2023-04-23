@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SliderModule } from 'angular-image-slider';
 import { SwiperModule } from 'swiper/angular';
 import { RouterModule } from '@angular/router';
 
@@ -22,7 +21,7 @@ import { HighlightDirective } from './directives/highlight.directive';
         RemplacePipe,
         HighlightDirective
     ],
-    imports: [CommonModule, SliderModule, SwiperModule, RouterModule],
+    imports: [CommonModule, SwiperModule, RouterModule],
     exports: [
         ImgComponent,
         ProductComponent,

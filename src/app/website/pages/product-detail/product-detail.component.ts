@@ -5,6 +5,9 @@ import { switchMap } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 
+import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+SwiperCore.use([Navigation, Pagination]);
+
 @Component({
     selector: 'app-product-detail',
     templateUrl: './product-detail.component.html',

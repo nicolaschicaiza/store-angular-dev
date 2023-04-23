@@ -4,12 +4,17 @@
     </button>
     <div class="detail" *ngIf="product">
         <div class="galley">
-            <angular-image-slider [images]="imagesUrl"> </angular-image-slider>
-            <!-- <swiper [slidesPerView]="1"> -->
-            <!--     <ng-template swiperSlide *ngFor="let img of product.images"> -->
-            <!--         <img [src]="img" [alt]="product.title" /> -->
-            <!--     </ng-template> -->
-            <!-- </swiper> -->
+            <!-- <angular-image-slider [images]="imagesUrl"> </angular-image-slider> -->
+            <swiper
+                style=" width: 642px; "
+                [slidesPerView]="1"
+                [pagination]="{ clickable: true }"
+                [navigation]="true"
+            >
+                <ng-template swiperSlide *ngFor="let img of product?.images">
+                    <img [src]="img" [alt]="img" />
+                </ng-template>
+            </swiper>
             <!-- <div class="slider"> -->
             <!--     <div class="slide" *ngFor="let img of product.images"> -->
             <!--         <img [src]="img" width="100%" alt="{{ product.title }}" /> -->

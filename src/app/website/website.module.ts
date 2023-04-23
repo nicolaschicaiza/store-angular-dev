@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SliderModule } from 'angular-image-slider';
 import { SwiperModule } from 'swiper/angular';
 import { SharedModule } from '../shared/shared.module';
 
@@ -31,7 +30,6 @@ import { QuicklinkModule } from 'ngx-quicklink';
     imports: [
         CommonModule,
         WebsiteRoutingModule,
-        SliderModule,
         SwiperModule,
         SharedModule,
         QuicklinkModule
